@@ -27,7 +27,7 @@ func (b *Ball) Collide(drawer base.Drawer) {
 	if b.intersects(paddle) {
 		b.Xv = -b.Xv
 		b.X += int(b.Xv) * 5
-		b.Yv = -b.Yv
+		// b.Yv = -b.Yv
 	}
 }
 
