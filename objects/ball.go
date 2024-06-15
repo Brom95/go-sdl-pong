@@ -13,21 +13,34 @@ type Ball struct {
 
 // Collide implements base.DrawerUpdater.
 func (b *Ball) Collide(drawer base.Drawer) {
-	var paddle *Paddle
+	var paddle *Paddle = nil
+	var ball *Ball = nil
 	switch drawer.(type) {
 	case *Paddle:
 		paddle = drawer.(*Paddle)
 
 	case *AiPaddle:
 		paddle = &drawer.(*AiPaddle).Paddle
-
+	case *Ball:
+		ball = drawer.(*Ball)
 	default:
 		return
 	}
-	if b.intersects(paddle) {
-		b.Xv = -b.Xv
-		b.X += int(b.Xv) * 5
-		// b.Yv = -b.Yv
+	if paddle != nil {
+		if b.intersectsPaddle(paddle) {
+			b.Xv = -b.Xv
+			b.X += int(b.Xv) * 5
+			// b.Yv = -b.Yv
+		}
+	}
+	if ball != nil {
+		if b.intersectsBall(ball) {
+			b.Xv = -b.Xv
+			b.Yv = -b.Yv
+			b.X += int(b.Xv) * 5
+			b.Y += int(b.Yv) * 5
+		}
+
 	}
 }
 
@@ -51,7 +64,26 @@ func (b *Ball) Update() {
 		b.Y = 300
 	}
 }
-func (b *Ball) intersects(p *Paddle) bool {
+func (b *Ball) intersectsBall(ball *Ball) bool {
+	circleDistanceX := math.Abs(float64(b.X - ball.X))
+	circleDistanceY := math.Abs(float64(b.Y - ball.Y))
+
+	if circleDistanceX > float64(ball.Radius+b.Radius) {
+		return false
+	}
+	if circleDistanceY > float64(ball.Radius+b.Radius) {
+		return false
+	}
+
+	if circleDistanceX <= float64(ball.Radius) {
+		return true
+	}
+	if circleDistanceY <= float64(ball.Radius) {
+		return true
+	}
+	return false
+}
+func (b *Ball) intersectsPaddle(p *Paddle) bool {
 	circleDistanceX := math.Abs(float64(b.X - p.X))
 	circleDistanceY := math.Abs(float64(b.Y - p.Y))
 
