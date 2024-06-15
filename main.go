@@ -68,17 +68,18 @@ func main() {
 	base.World.AddDrawerUpdater("player1", &player1)
 	base.World.AddDrawerUpdater("player2", &player2)
 
-	// Uncomment for yellow collision madness
+	// Uncomment for collision madness
 	// go func() {
-	// 	t := time.NewTicker(1 * time.Second)
-	// 	i := 1
-	// 	for range t.C {
+	// 	// t := time.NewTicker(5 * time.Second)
+
+	// 	for i := 0; i < 100; i++ {
+	// 		time.Sleep(100 * time.Millisecond)
 	// 		base.World.AddDrawerUpdater("ball"+fmt.Sprint(i), &objects.Ball{
-	// 			Color: base.Color{R: 255, G: 255, B: 0},
+	// 			Color: base.Color{R: byte(rand.Intn(255)), G: byte(rand.Intn(255)), B: byte(rand.Intn(255))},
 	// 			Cycle: base.Cycle{Radius: 10},
 	// 			Move:  base.Move{Speed: 3, Xv: -1, Yv: 1, Position: base.Position{X: 510, Y: 300}},
 	// 		})
-	// 		i += 1
+
 	// 	}
 	// }()
 	for {

@@ -59,6 +59,7 @@ func (w *world) Draw() {
 			wg.Add(1)
 			drawer := drawer
 			j := j
+
 			go func() {
 				defer wg.Done()
 				drawer.Collide(drawers[j])

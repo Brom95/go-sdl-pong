@@ -29,18 +29,26 @@ func (b *Ball) Collide(drawer base.Drawer) {
 	if paddle != nil {
 		if b.intersectsPaddle(paddle) {
 			b.Xv = -b.Xv
-			b.X += int(b.Xv) * 5
+
 			// b.Yv = -b.Yv
+			for b.intersectsPaddle(paddle) {
+				b.X += 1 * int(b.Xv)
+				b.Y += 1 * int(b.Yv)
+			}
 		}
+
 	}
 	if ball != nil {
 		if b.intersectsBall(ball) {
-			b.Xv = -b.Xv
-			b.Yv = -b.Yv
-			b.X += int(b.Xv) * 5
-			b.Y += int(b.Yv) * 5
+			b.Xv, ball.Xv = -b.Xv, -ball.Xv
+			b.Yv, ball.Yv = -b.Yv, -ball.Yv
+			// b.X += int(b.Xv) * 5
+			// b.Y += int(b.Yv) * 5
+			for b.intersectsBall(ball) {
+				b.X += 1 * int(b.Xv)
+				b.Y += 1 * int(b.Yv)
+			}
 		}
-
 	}
 }
 
@@ -65,23 +73,8 @@ func (b *Ball) Update() {
 	}
 }
 func (b *Ball) intersectsBall(ball *Ball) bool {
-	circleDistanceX := math.Abs(float64(b.X - ball.X))
-	circleDistanceY := math.Abs(float64(b.Y - ball.Y))
-
-	if circleDistanceX > float64(ball.Radius+b.Radius) {
-		return false
-	}
-	if circleDistanceY > float64(ball.Radius+b.Radius) {
-		return false
-	}
-
-	if circleDistanceX <= float64(ball.Radius) {
-		return true
-	}
-	if circleDistanceY <= float64(ball.Radius) {
-		return true
-	}
-	return false
+	distanceSquare := math.Pow(float64(b.X-ball.X), 2) + math.Pow(float64(b.Y-ball.Y), 2)
+	return distanceSquare <= math.Pow(float64(b.Radius)+float64(ball.Radius), 2)
 }
 func (b *Ball) intersectsPaddle(p *Paddle) bool {
 	circleDistanceX := math.Abs(float64(b.X - p.X))
