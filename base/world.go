@@ -42,7 +42,6 @@ func (w *world) Draw() {
 	drawers := make([]Drawer, 0, len(w.ObjectsToDraw))
 	wg := sync.WaitGroup{}
 	w.DrawMutex.Lock()
-	defer w.DrawMutex.Unlock()
 	defer wg.Wait()
 	for _, drawer := range w.ObjectsToDraw {
 		drawer := drawer
@@ -54,6 +53,7 @@ func (w *world) Draw() {
 
 		}()
 	}
+	w.DrawMutex.Unlock()
 	for i, drawer := range drawers {
 		for j := i + 1; j < len(drawers); j++ {
 			wg.Add(1)
