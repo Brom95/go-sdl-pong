@@ -35,19 +35,46 @@ func main() {
 	keyState := sdl.GetKeyboardState()
 	base.NewWorld(screen, keyState)
 	player1 := objects.Paddle{
-
-		Square: base.Square{W: 20, H: 100, Color: base.Color{R: 255, G: 255, B: 255}, Entity: base.Entity{X: 50, Y: 100, Speed: 5, AlwaysOnScreen: true}},
+		Square: base.Square{
+			W:     20,
+			H:     100,
+			Color: base.Color{R: 255, G: 255, B: 255},
+			Entity: base.Entity{
+				X:              50,
+				Y:              100,
+				Speed:          5,
+				AlwaysOnScreen: true,
+			},
+		},
 	}
 	ball := objects.Ball{
-		Cycle: base.Cycle{Radius: 10, Color: base.Color{R: 255, G: 255, B: 255}, Entity: base.Entity{X: 500, Y: 300, Speed: 3, Xv: -1, Yv: 1}},
+		Cycle: base.Cycle{
+			Radius: 10,
+			Color:  base.Color{R: 255, G: 255, B: 255},
+			Entity: base.Entity{
+				X:     500,
+				Y:     300,
+				Speed: 3,
+				Xv:    -1,
+				Yv:    1,
+			},
+		},
 	}
 	player2 := objects.AiPaddle{
 		Paddle: objects.Paddle{
-
-			Square: base.Square{W: 20, H: 100, Entity: base.Entity{Speed: 5,
-				Xv:             0,
-				Yv:             0,
-				AlwaysOnScreen: true, X: screen.Width - 50, Y: 100}, Color: base.Color{R: 255, G: 255, B: 255}},
+			Square: base.Square{
+				W: 20,
+				H: 100,
+				Entity: base.Entity{
+					Speed:          5,
+					Xv:             0,
+					Yv:             0,
+					AlwaysOnScreen: true,
+					X:              screen.Width - 50,
+					Y:              100,
+				},
+				Color: base.Color{R: 255, G: 255, B: 255},
+			},
 		},
 	}
 	base.World.AddDrawerUpdater("ball", &ball)
