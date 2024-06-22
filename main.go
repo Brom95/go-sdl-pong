@@ -36,32 +36,18 @@ func main() {
 	base.NewWorld(screen, keyState)
 	player1 := objects.Paddle{
 
-		Move: base.Move{
-			Position:       base.Position{X: 50, Y: 100},
-			Speed:          5,
-			Xv:             0,
-			Yv:             0,
-			AlwaysOnScreen: true,
-		},
-		Color:  base.Color{R: 255, G: 255, B: 255},
-		Square: base.Square{W: 20, H: 100},
+		Square: base.Square{W: 20, H: 100, Color: base.Color{R: 255, G: 255, B: 255}, Entity: base.Entity{X: 50, Y: 100, Speed: 5, AlwaysOnScreen: true}},
 	}
 	ball := objects.Ball{
-		Color: base.Color{R: 255, G: 255, B: 255},
-		Cycle: base.Cycle{Radius: 10},
-		Move:  base.Move{Speed: 3, Xv: -1, Yv: 1, Position: base.Position{X: 500, Y: 300}},
+		Cycle: base.Cycle{Radius: 10, Color: base.Color{R: 255, G: 255, B: 255}, Entity: base.Entity{X: 500, Y: 300, Speed: 3, Xv: -1, Yv: 1}},
 	}
 	player2 := objects.AiPaddle{
 		Paddle: objects.Paddle{
-			Move: base.Move{
-				Position:       base.Position{X: screen.Width - 50, Y: 100},
-				Speed:          5,
+
+			Square: base.Square{W: 20, H: 100, Entity: base.Entity{Speed: 5,
 				Xv:             0,
 				Yv:             0,
-				AlwaysOnScreen: true,
-			},
-			Color:  base.Color{R: 255, G: 255, B: 255},
-			Square: base.Square{W: 20, H: 100},
+				AlwaysOnScreen: true, X: screen.Width - 50, Y: 100}, Color: base.Color{R: 255, G: 255, B: 255}},
 		},
 	}
 	base.World.AddDrawerUpdater("ball", &ball)
@@ -75,9 +61,7 @@ func main() {
 	// 	for i := 0; i < 100; i++ {
 	// 		time.Sleep(100 * time.Millisecond)
 	// 		base.World.AddDrawerUpdater("ball"+fmt.Sprint(i), &objects.Ball{
-	// 			Color: base.Color{R: byte(rand.Intn(255)), G: byte(rand.Intn(255)), B: byte(rand.Intn(255))},
-	// 			Cycle: base.Cycle{Radius: 10},
-	// 			Move:  base.Move{Speed: 3, Xv: -1, Yv: 1, Position: base.Position{X: 510, Y: 300}},
+	// 			Cycle: base.Cycle{Radius: 10, Color: base.Color{R: 255, G: 255, B: 255}, Entity: base.Entity{X: 500, Y: 300, Speed: 3, Xv: -1, Yv: 1}},
 	// 		})
 
 	// 	}
@@ -97,7 +81,7 @@ func main() {
 		renderer.Present()
 
 		screen.Clear()
-		sdl.Delay(16)
+		sdl.Delay(12)
 
 	}
 }

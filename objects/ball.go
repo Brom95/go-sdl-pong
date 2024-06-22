@@ -6,8 +6,6 @@ import (
 )
 
 type Ball struct {
-	base.Color
-	base.Move
 	base.Cycle
 }
 
@@ -51,19 +49,7 @@ func (b *Ball) Collide(drawer base.Drawer) {
 		}
 	}
 }
-
-func (b *Ball) Draw() {
-	for y := -b.Radius; y < b.Radius; y++ {
-		for x := -b.Radius; x < b.Radius; x++ {
-			if x*x+y*y < b.Radius*b.Radius {
-				base.World.Screen.SetPixel(int(b.X)+x, int(b.Y)+y, b.Color)
-			}
-		}
-	}
-}
-
 func (b *Ball) Update() {
-	b.Move.Update()
 	if b.Y-(b.Radius) <= 0 || b.Y+(b.Radius) >= (base.World.Screen.Height) {
 		b.Yv = -b.Yv
 	}
@@ -71,7 +57,9 @@ func (b *Ball) Update() {
 		b.X = 300
 		b.Y = 300
 	}
+	b.Cycle.Update()
 }
+
 func (b *Ball) intersectsBall(ball *Ball) bool {
 	distanceSquare := math.Pow(float64(b.X-ball.X), 2) + math.Pow(float64(b.Y-ball.Y), 2)
 	return distanceSquare <= math.Pow(float64(b.Radius)+float64(ball.Radius), 2)

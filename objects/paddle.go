@@ -7,8 +7,6 @@ import (
 )
 
 type Paddle struct {
-	base.Move
-	base.Color
 	base.Square
 }
 
@@ -37,7 +35,7 @@ func (p *Paddle) Update() {
 		p.Yv = 0
 	}
 
-	p.Move.Update()
+	p.Square.Update()
 }
 
 type AiPaddle struct {
@@ -58,6 +56,6 @@ func (p *AiPaddle) Update() {
 		p.Yv = 0
 	}
 
-	p.Move.Update()
+	p.Paddle.Square.Update()
 
 }
